@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Created-By: Gabriel Pantoja
+Main-Class: Visual
+X-COMMENT: Se requiere jdk o jre
