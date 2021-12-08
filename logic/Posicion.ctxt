@@ -1,0 +1,9 @@
+#BlueJ class context
+comment0.target=Posicion
+comment1.params=fila\ columna
+comment1.target=Posicion(int,\ int)
+comment2.params=
+comment2.target=int\ getFila()
+comment3.params=
+comment3.target=int\ getColumna()
+numComments=4

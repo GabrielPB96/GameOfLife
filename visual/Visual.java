@@ -1,7 +1,10 @@
+package visual;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import logic.*;
 
 public class Visual extends JFrame{
     private Lamina lamina;
@@ -9,7 +12,21 @@ public class Visual extends JFrame{
     private Toolkit pantalla = Toolkit.getDefaultToolkit();
     
     public Visual() {
+        lamina = new Lamina();
         setTitle("Game Of Life");
+        setBounds(0, 0, pantalla.getScreenSize().height-35, pantalla.getScreenSize().height-35);
+        setLocationRelativeTo(null);
+        
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+        init();
+        setVisible(true);
+        play.setVisible(true);
+        reset.setVisible(true);
+        setVisible(true);
+    }
+    
+    public void init() {
         setLayout(new BorderLayout());
         play = new JButton("PLAY");
         reset = new JButton("RESET");
@@ -35,19 +52,16 @@ public class Visual extends JFrame{
             }
         });
         
-        
+        play.setVisible(false);
+        reset.setVisible(false);
         add(play, BorderLayout.SOUTH);
         add(reset, BorderLayout.NORTH);
-        lamina = new Lamina();
-        setBounds(0, 0, pantalla.getScreenSize().height-35, pantalla.getScreenSize().height-35);
-        setLocationRelativeTo(null);
         add(lamina, BorderLayout.CENTER);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setResizable(false);
-        setVisible(true);
     }
     
+    
     public static void main(String args[]) {
+        new Bienvenida();
         new Visual();
     }
 }
@@ -59,7 +73,7 @@ class Lamina extends JPanel {
     
     public Lamina() {
         run = false;
-        setLayout(new GridLayout(75, 75));
+        setBackground(new Color(238, 193, 112));
         celulas = new ArrayList<Celula>();
         tablero = new Tablero(75, 75);
         paintTablero();
@@ -70,6 +84,8 @@ class Lamina extends JPanel {
     }
     
     public void paintTablero() {
+        removeAll();
+        setLayout(new GridLayout(75, 75));
         var t = tablero.getTablero();
         for(int i = 0; i < t.length; i++) {
             for(int j = 0; j < t.length; j++) {
@@ -77,6 +93,7 @@ class Lamina extends JPanel {
                 celulas.add(t[i][j]);
             }
         } 
+        updateUI();
     }
     
     public void reset() {

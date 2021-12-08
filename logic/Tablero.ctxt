@@ -1,0 +1,17 @@
+#BlueJ class context
+comment0.target=Tablero
+comment1.params=filas\ columnas
+comment1.target=Tablero(int,\ int)
+comment2.params=
+comment2.target=void\ init()
+comment3.params=
+comment3.target=void\ reset()
+comment4.params=p
+comment4.target=void\ establecerDisposicionInicial(Posicion[])
+comment5.params=
+comment5.target=void\ actualizarVecinos()
+comment6.params=
+comment6.target=void\ play()
+comment7.params=
+comment7.target=Celula[][]\ getTablero()
+numComments=8

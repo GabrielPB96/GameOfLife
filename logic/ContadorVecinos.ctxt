@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=ContadorVecinos
+comment1.params=celula
+comment1.target=ContadorVecinos(Celula)
+comment2.params=celulas
+comment2.target=int\ cantidadVecinosVivos(Celula[][])
+comment3.params=fila\ columna\ celulas\ vivos
+comment3.target=int\ contarVecinos(int,\ int,\ Celula[][],\ boolean)
+comment4.params=fila\ columna\ celulas
+comment4.target=boolean\ posicionValida(int,\ int,\ Celula[][])
+numComments=5

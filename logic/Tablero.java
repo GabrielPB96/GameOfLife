@@ -1,3 +1,4 @@
+package logic;
 
 /**
  * Write a description of class Tablero here.
