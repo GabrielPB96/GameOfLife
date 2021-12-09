@@ -52,7 +52,7 @@ public class Tablero{
                 if(vecinosVivos < 2 || vecinosVivos > 3 ) {
                     celulas[i][j].dead();        
                 }
-                if(vecinosVivos == 3){
+                if(!celulas[i][j].vivo() && vecinosVivos == 3){
                     celulas[i][j].revivir(); 
                 }
             }
