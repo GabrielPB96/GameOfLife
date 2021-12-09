@@ -15,37 +15,53 @@ public class ContadorVecinos{
     
     private int contarVecinos(int fila, int columna, Celula[][] celulas, boolean vivos) {
         int cantidad = 0;
-        if(posicionValida(fila - 1, columna, celulas)) {
-            if(celulas[fila - 1][columna].vivo()) cantidad++;
-        }
+        int fila_real, columna_real;
+
+        //if(posicionValida(fila - 1, columna, celulas)) {
+            fila_real = filaReal(fila - 1, celulas.length-1);
+            if(celulas[fila_real][columna].vivo()) cantidad++;
+        //}
         
-        if(posicionValida(fila, columna + 1, celulas)) {
-            if(celulas[fila][columna + 1].vivo()) cantidad++; 
-        }
+        //if(posicionValida(fila, columna + 1, celulas)) {
+            columna_real = columnaReal(columna + 1, celulas[0].length-1);
+            if(celulas[fila][columna_real].vivo()) cantidad++; 
+        //}
         
-        if(posicionValida(fila + 1, columna, celulas)) {
-            if(celulas[fila + 1][columna].vivo()) cantidad++; 
-        }
+        //if(posicionValida(fila + 1, columna, celulas)) {
+            fila_real = filaReal(fila + 1, celulas.length-1);
+            if(celulas[fila_real][columna].vivo()) cantidad++; 
+        //}
         
-        if(posicionValida(fila, columna - 1, celulas)) {
-            if(celulas[fila][columna - 1].vivo()) cantidad++; 
-        }
+        //if(posicionValida(fila, columna - 1, celulas)) {
+            columna_real = columnaReal(columna - 1, celulas[0].length-1);
+            if(celulas[fila][columna_real].vivo()) cantidad++; 
+        //}
         
-        if(posicionValida(fila - 1, columna + 1, celulas)) {
-            if(celulas[fila - 1][columna + 1].vivo()) cantidad++; 
-        }
+        /*************************************************************/
         
-        if(posicionValida(fila + 1, columna + 1, celulas)) {
-            if(celulas[fila + 1][columna + 1].vivo()) cantidad++; 
-        }
+        //if(posicionValida(fila - 1, columna + 1, celulas)) {
+            fila_real = filaReal(fila - 1, celulas.length-1);
+            columna_real = columnaReal(columna + 1, celulas[0].length-1);
+            if(celulas[fila_real][columna_real].vivo()) cantidad++; 
+        //}
         
-        if(posicionValida(fila + 1, columna - 1, celulas)) {
-            if(celulas[fila + 1][columna - 1].vivo()) cantidad++; 
-        }
+        //if(posicionValida(fila + 1, columna + 1, celulas)) {
+            fila_real = filaReal(fila + 1, celulas.length-1);
+            columna_real = columnaReal(columna - 1, celulas[0].length-1);
+            if(celulas[fila_real][columna_real].vivo()) cantidad++; 
+        //}
         
-        if(posicionValida(fila - 1, columna - 1, celulas)) {
-            if(celulas[fila - 1][columna - 1].vivo()) cantidad++; 
-        }
+        //if(posicionValida(fila + 1, columna - 1, celulas)) {
+            fila_real = filaReal(fila + 1, celulas.length-1);
+            columna_real = columnaReal(columna + 1, celulas[0].length-1);
+            if(celulas[fila_real][columna_real].vivo()) cantidad++; 
+        //}
+        
+        //if(posicionValida(fila - 1, columna - 1, celulas)) {
+            fila_real = filaReal(fila - 1, celulas.length-1);
+            columna_real = columnaReal(columna - 1, celulas[0].length-1);
+            if(celulas[fila_real][columna_real].vivo()) cantidad++; 
+        //}
         
         if(!vivos) return 8 - cantidad;
         return cantidad;
@@ -61,5 +77,24 @@ public class ContadorVecinos{
         }
         
         return true;
+    }
+    
+    private int filaReal(int fila, int limite) {
+        if (fila < 0) {
+            return limite;
+        }
+        if (fila > limite) {
+            return 0;
+        }
+        return fila;
+    }
+    private int columnaReal(int colum, int limite) {
+        if (colum < 0) {
+            return limite;
+        }
+        if (colum > limite) {
+            return 0;
+        }
+        return colum;
     }
 }
