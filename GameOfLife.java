@@ -8,7 +8,7 @@
 import visual.*;
 public class GameOfLife {
     public static void main(String args[]) {
-        //new Bienvenida();
+        new Bienvenida();
         new Visual();
     }
 }

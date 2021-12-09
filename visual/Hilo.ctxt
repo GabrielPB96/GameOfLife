@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Hilo
+comment1.params=object
+comment1.target=Hilo(java.lang.Runnable)
+comment2.params=
+comment2.target=Hilo()
+comment3.params=
+comment3.target=void\ newSuspend()
+comment4.params=
+comment4.target=void\ newResume()
+comment5.params=
+comment5.target=void\ newStop()
+numComments=6
