@@ -7,9 +7,8 @@ package logic;
  * @version (a version number or a date)
  */
 import java.awt.Color;
-import java.io.Serializable;
 
-public class Tablero implements Serializable{
+public class Tablero {
     private Celula[][] celulas;
     
     public Tablero(int filas, int columnas) {
@@ -25,11 +24,18 @@ public class Tablero implements Serializable{
         }
     }
     
+    public void infinite(boolean b) {
+        for(int i=0; i<celulas.length; i++){
+            for(int j=0; j<celulas[i].length; j++){
+                celulas[i][j].infinite(b);
+            }
+        }
+    }
+    
     public void reset() {
         for(int i=0; i<celulas.length; i++){
             for(int j=0; j<celulas[i].length; j++){
                 celulas[i][j].dead();
-                celulas[i][j].resetTimeLife();
             }
         }
     }
@@ -49,13 +55,13 @@ public class Tablero implements Serializable{
     }
     
     public void play() {
+        actualizarVecinos();
         for(int i=0; i<celulas.length; i++){
             for(int j=0; j<celulas[i].length; j++){
                 int vecinosVivos = celulas[i][j].vecinosVivos();
-                if(vecinosVivos < 2 || vecinosVivos > 3 ) {
+                if(vecinosVivos < 2 || vecinosVivos > 3) {
                     celulas[i][j].dead();        
-                }
-                if(!celulas[i][j].vivo() && vecinosVivos == 3){
+                }else if(!celulas[i][j].vivo() && vecinosVivos == 3){
                     celulas[i][j].revivir(); 
                 }
             }

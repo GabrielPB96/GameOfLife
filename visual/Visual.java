@@ -10,6 +10,7 @@ import storage.*;
 public class Visual extends JFrame {
     private Lamina lamina;
     private JButton play, reset, pause, resume, subir, bajar, save, showPatterns;
+    private JComboBox comboInfinite;
     private JLabel velocidad;
     private Toolkit pantalla = Toolkit.getDefaultToolkit();
     private Icon bajarIco = new ImageIcon(pantalla.getImage("./assets/bajar.png").getScaledInstance(20, 20, Image.SCALE_SMOOTH));
@@ -56,6 +57,10 @@ public class Visual extends JFrame {
         save = new JButton("SAVE");
         showPatterns = new JButton("PATTERNS");
         
+        comboInfinite = new JComboBox();
+        comboInfinite.addItem("Infinite");
+        comboInfinite.addItem("Finite");
+        
         play.setPreferredSize(new Dimension(70, 20));
         pause.setPreferredSize(new Dimension(90, 20));
         resume.setPreferredSize(new Dimension(90, 20));
@@ -81,12 +86,14 @@ public class Visual extends JFrame {
         resume.addActionListener(oyenteButton);
         save.addActionListener(oyenteButton);
         showPatterns.addActionListener(oyenteButton);
+        comboInfinite.addActionListener(oyenteButton);
         
         laminaNorth.add(velocidad);
         laminaNorth.add(subir);
         laminaNorth.add(bajar);
         laminaNorth.add(reset);
         laminaNorth.add(showPatterns);
+        laminaNorth.add(comboInfinite);
         
         laminaSouth.add(play);
         laminaSouth.add(pause);
@@ -157,6 +164,12 @@ public class Visual extends JFrame {
                 }
             }else if(e.getSource().equals(showPatterns)) {
                 new PatternsFrame(Visual.this, storage.getPatterns());
+            }else if(e.getSource().equals(comboInfinite)) {
+                if (((String)comboInfinite.getSelectedItem()).equals("Infinite")) {
+                    lamina.getBoard().infinite(true);
+                }else {
+                    lamina.getBoard().infinite(false);
+                }
             }
         }
         
@@ -197,7 +210,8 @@ class Lamina extends JPanel {
     }
     
     public boolean subirVelocidad() {
-        if (delay > 101) {
+        //delay > 101
+        if (delay > 81) {
             delay = delay - 1;
             return true;
         }
@@ -303,7 +317,7 @@ class Lamina extends JPanel {
     }
     
     public Tablero getBoard() {
-        return tablero.clone();
+        return tablero;
     }
     
     public void loadPattern(ArrayList<int[]> posiciones) {

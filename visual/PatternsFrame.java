@@ -21,6 +21,7 @@ public class PatternsFrame extends JDialog{
         this.patterns = patterns;
         this.owner = owner;
         createFrame();
+        setResizable(false);
         setLocationRelativeTo(owner);
         setVisible(true);
     }

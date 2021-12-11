@@ -11,7 +11,9 @@ import java.awt.event.*;
  * @version (a version number or a date)
  */
 public class Bienvenida extends JFrame {
+    boolean delay;
     public Bienvenida() {
+        delay = true;
         setBounds(0, 0, 400, 300);
         LaminaBienvenida l = new LaminaBienvenida();
         addWindowListener(new OyenteWindow());
@@ -22,7 +24,9 @@ public class Bienvenida extends JFrame {
         setVisible(true);
         l.logo();
         try{
-            Thread.sleep(2000);
+            if(delay) {
+                Thread.sleep(2000);
+            }
         }catch(Exception e) {}
     }
     
@@ -32,7 +36,7 @@ public class Bienvenida extends JFrame {
     
     private class OyenteWindow implements WindowListener {
         public void windowClosing(WindowEvent e) {
-            System.out.println("GAUARDADO");
+            delay = false;
         }
         
         public void windowActivated(WindowEvent e){}

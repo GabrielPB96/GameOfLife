@@ -3,7 +3,6 @@ package logic;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
-import java.io.Serializable;
 
 /**
  * Write a description of class Celula here.
@@ -11,7 +10,7 @@ import java.io.Serializable;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Celula extends JButton implements MouseListener, Serializable{
+public class Celula extends JButton implements MouseListener {
     private boolean vivo;
     private Posicion posicion;
     private ContadorVecinos contador;
@@ -37,23 +36,22 @@ public class Celula extends JButton implements MouseListener, Serializable{
     
     public void dead() {
         vivo = false;
-        setBackground(Color.BLACK);
-    }
-    
-    public void resetTimeLife() {
+        vecinosVivosActuales = 0;
+        vecinosVivosAntiguos = 0;
         tiempoEstatico = 0;
+        setBackground(Color.BLACK);
     }
     
     public void revivir() {
         vivo = true;
-        if(vecinosVivosAntiguos == vecinosVivosActuales && vecinosVivosActuales != 0) {
-            if(tiempoEstatico < 20) {
+        if(vecinosVivosActuales >= 2 && vecinosVivosActuales <= 3) {
+            if(tiempoEstatico < 10) {
                 tiempoEstatico++;
             }
-            if(tiempoEstatico == 20) {
-                setBackground(Color.RED);
-            }else if(tiempoEstatico >= 10) {
-                    setBackground(Color.PINK);
+            if(tiempoEstatico == 10) {
+                setBackground(new Color(34, 177, 76));
+            }else if(tiempoEstatico >= 5) {
+                    setBackground(new Color(181, 230, 29));
             }else{
                 setBackground(Color.WHITE);
             }
@@ -91,6 +89,10 @@ public class Celula extends JButton implements MouseListener, Serializable{
         clone.vecinosVivosAntiguos = this.vecinosVivosAntiguos;
         clone.tiempoEstatico = this.tiempoEstatico;
         return clone;
+    }
+    
+    public void infinite(boolean b) {
+        contador.setInfinite(b);
     }
     
     public void mouseClicked(MouseEvent e){

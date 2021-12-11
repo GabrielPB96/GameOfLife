@@ -1,8 +1,8 @@
 #BlueJ package file
-dependency1.from=ContadorVecinos
+dependency1.from=Tablero
 dependency1.to=Celula
 dependency1.type=UsesDependency
-dependency2.from=Tablero
+dependency2.from=ContadorVecinos
 dependency2.to=Celula
 dependency2.type=UsesDependency
 dependency3.from=Celula

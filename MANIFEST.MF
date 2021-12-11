@@ -1,4 +1,4 @@
-Manifest-Version: 1.1
+Manifest-Version: Beta
 Created-By: Gabriel Pantoja
 Main-Class: GameOfLife
 X-COMMENT: Se requiere jdk o jre

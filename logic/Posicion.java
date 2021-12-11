@@ -1,7 +1,6 @@
 package logic;
-import java.io.Serializable;
 
-public class Posicion implements Serializable{
+public class Posicion {
     private int fila;
     private int columna;
     
