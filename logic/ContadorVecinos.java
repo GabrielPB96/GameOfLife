@@ -68,35 +68,22 @@ public class ContadorVecinos {
     
     private void contarVecinosInfinite(int fila, int columna, Celula[][] celulas, boolean vivos) {
         cantidad = 0;
-        int fila_real, columna_real;
 
-        fila_real = filaReal(fila - 1, celulas.length-1);
-        if(celulas[fila_real][columna].vivo()) cantidad++;
+        if(celulas[filaReal(fila - 1, celulas.length-1)][columna].vivo()) cantidad++;
 
-        columna_real = columnaReal(columna + 1, celulas[0].length-1);
-        if(celulas[fila][columna_real].vivo()) cantidad++; 
+        if(celulas[fila][columnaReal(columna + 1, celulas[0].length-1)].vivo()) cantidad++; 
 
-        fila_real = filaReal(fila + 1, celulas.length-1);
-        if(celulas[fila_real][columna].vivo()) cantidad++; 
+        if(celulas[filaReal(fila + 1, celulas.length-1)][columna].vivo()) cantidad++; 
 
-        columna_real = columnaReal(columna - 1, celulas[0].length-1);
-        if(celulas[fila][columna_real].vivo()) cantidad++; 
+        if(celulas[fila][columnaReal(columna - 1, celulas[0].length-1)].vivo()) cantidad++; 
 
-        fila_real = filaReal(fila - 1, celulas.length-1);
-        columna_real = columnaReal(columna + 1, celulas[0].length-1);
-        if(celulas[fila_real][columna_real].vivo()) cantidad++; 
+        if(celulas[filaReal(fila - 1, celulas.length-1)][columnaReal(columna + 1, celulas[0].length-1)].vivo()) cantidad++; 
 
-        fila_real = filaReal(fila + 1, celulas.length-1);
-        columna_real = columnaReal(columna - 1, celulas[0].length-1);
-        if(celulas[fila_real][columna_real].vivo()) cantidad++; 
+        if(celulas[filaReal(fila + 1, celulas.length-1)][columnaReal(columna - 1, celulas[0].length-1)].vivo()) cantidad++; 
 
-        fila_real = filaReal(fila + 1, celulas.length-1);
-        columna_real = columnaReal(columna + 1, celulas[0].length-1);
-        if(celulas[fila_real][columna_real].vivo()) cantidad++; 
+        if(celulas[filaReal(fila + 1, celulas.length-1)][columnaReal(columna + 1, celulas[0].length-1)].vivo()) cantidad++; 
 
-        fila_real = filaReal(fila - 1, celulas.length-1);
-        columna_real = columnaReal(columna - 1, celulas[0].length-1);
-        if(celulas[fila_real][columna_real].vivo()) cantidad++; 
+        if(celulas[filaReal(fila - 1, celulas.length-1)][columnaReal(columna - 1, celulas[0].length-1)].vivo()) cantidad++; 
         
         if(!vivos) cantidad = 8 - cantidad;
     }

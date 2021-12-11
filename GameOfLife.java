@@ -1,7 +1,7 @@
 
 /**
  * Write a description of class GameOfLife here.
- *
+ * https://github.com/GabrielPB96/GameOfLife.git
  * @author (Pantoja Gabriel)
  * @version (1.1 08-12-2021)
  */

@@ -154,13 +154,21 @@ public class Visual extends JFrame {
             }else if(e.getSource().equals(resume)) {
                 lamina.resume();
             }else if(e.getSource().equals(save)) {
-                String name = JOptionPane.showInputDialog(Visual.this, "Name Pattern");
-                if (!name.isEmpty()) {
-                    ArrayList<int[]> posicionesMarcadas = getPosiciones();
-                    Pattern pattern = new Pattern(name, posicionesMarcadas);
-                    storage.save(pattern);
+                if (!lamina.enJuego()) {
+                    String name = JOptionPane.showInputDialog(Visual.this, "Name Pattern");
+                    if(name != null) {
+                        if (!name.isEmpty()) {
+                            ArrayList<int[]> posicionesMarcadas = getPosiciones();
+                            Pattern pattern = new Pattern(name, posicionesMarcadas);
+                            storage.save(pattern);
+                        }else {
+                            JOptionPane.showMessageDialog(Visual.this, "Error, nombre vacio...");
+                        }
+                    }else {
+                        JOptionPane.showMessageDialog(Visual.this, "Error, nombre null...");
+                    }
                 }else {
-                    JOptionPane.showMessageDialog(Visual.this, "Error, nombre vacio...");
+                    JOptionPane.showMessageDialog(Visual.this, "Error, Reset the board...");
                 }
             }else if(e.getSource().equals(showPatterns)) {
                 new PatternsFrame(Visual.this, storage.getPatterns());
@@ -211,7 +219,7 @@ class Lamina extends JPanel {
     
     public boolean subirVelocidad() {
         //delay > 101
-        if (delay > 81) {
+        if (delay > 61) {
             delay = delay - 1;
             return true;
         }

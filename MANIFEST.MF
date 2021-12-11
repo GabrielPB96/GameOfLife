@@ -1,4 +1,4 @@
 Manifest-Version: Beta
-Created-By: Gabriel Pantoja
+Created-By: Gabriel Pantoja https://github.com/GabrielPB96/GameOfLife.git
 Main-Class: GameOfLife
 X-COMMENT: Se requiere jdk o jre
