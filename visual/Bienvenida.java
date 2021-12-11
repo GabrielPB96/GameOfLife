@@ -2,6 +2,7 @@ package visual;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 /**
  * Write a description of class Bienvenida here.
@@ -13,6 +14,7 @@ public class Bienvenida extends JFrame {
     public Bienvenida() {
         setBounds(0, 0, 400, 300);
         LaminaBienvenida l = new LaminaBienvenida();
+        addWindowListener(new OyenteWindow());
         add(l);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -21,12 +23,25 @@ public class Bienvenida extends JFrame {
         l.logo();
         try{
             Thread.sleep(2000);
-            dispose();
         }catch(Exception e) {}
     }
     
     public static void main(String[] args) {
         new Bienvenida();
+    }
+    
+    private class OyenteWindow implements WindowListener {
+        public void windowClosing(WindowEvent e) {
+            System.out.println("GAUARDADO");
+        }
+        
+        public void windowActivated(WindowEvent e){}
+        
+        public void windowClosed(WindowEvent e){}
+        public void windowDeactivated(WindowEvent e){}
+        public void windowDeiconified(WindowEvent e){}
+        public void windowIconified(WindowEvent e){}
+        public void windowOpened(WindowEvent e){}
     }
 }
 

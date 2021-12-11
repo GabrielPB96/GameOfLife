@@ -7,7 +7,9 @@ package logic;
  * @version (a version number or a date)
  */
 import java.awt.Color;
-public class Tablero{
+import java.io.Serializable;
+
+public class Tablero implements Serializable{
     private Celula[][] celulas;
     
     public Tablero(int filas, int columnas) {
@@ -27,6 +29,7 @@ public class Tablero{
         for(int i=0; i<celulas.length; i++){
             for(int j=0; j<celulas[i].length; j++){
                 celulas[i][j].dead();
+                celulas[i][j].resetTimeLife();
             }
         }
     }
@@ -62,5 +65,29 @@ public class Tablero{
     
     public Celula[][] getTablero() {
         return celulas;
+    }
+    
+    public Tablero clone() {
+        Celula[][] clone = new Celula[celulas.length][celulas[0].length];
+        for(int i=0; i<celulas.length; i++){
+            for(int j=0; j<celulas[i].length; j++){
+                clone[i][j] = celulas[i][j].clone();
+            }
+        }
+        Tablero cloneBoard = new Tablero(0, 0);
+        cloneBoard.celulas = clone;
+        return cloneBoard;
+    }
+    
+    public int filas() {
+        return celulas.length;
+    }
+    
+    public int columnas() {
+        return celulas[0].length;
+    }
+    
+    public void revivir(int fila, int columna) {
+        celulas[fila][columna].revivir();
     }
 }

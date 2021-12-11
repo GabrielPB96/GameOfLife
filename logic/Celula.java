@@ -3,6 +3,7 @@ package logic;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+import java.io.Serializable;
 
 /**
  * Write a description of class Celula here.
@@ -10,7 +11,7 @@ import javax.swing.*;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Celula extends JButton implements MouseListener{
+public class Celula extends JButton implements MouseListener, Serializable{
     private boolean vivo;
     private Posicion posicion;
     private ContadorVecinos contador;
@@ -37,6 +38,10 @@ public class Celula extends JButton implements MouseListener{
     public void dead() {
         vivo = false;
         setBackground(Color.BLACK);
+    }
+    
+    public void resetTimeLife() {
+        tiempoEstatico = 0;
     }
     
     public void revivir() {
@@ -77,6 +82,15 @@ public class Celula extends JButton implements MouseListener{
     
     public int vecinosAntiguos() {
         return vecinosVivosAntiguos;
+    }
+    
+    public Celula clone() {
+        Celula clone = new Celula(posicion.getFila(), posicion.getColumna());
+        clone.vivo = this.vivo();
+        clone.vecinosVivosActuales = this.vecinosVivosActuales;
+        clone.vecinosVivosAntiguos = this.vecinosVivosAntiguos;
+        clone.tiempoEstatico = this.tiempoEstatico;
+        return clone;
     }
     
     public void mouseClicked(MouseEvent e){

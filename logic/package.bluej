@@ -1,15 +1,15 @@
 #BlueJ package file
-dependency1.from=Tablero
+dependency1.from=ContadorVecinos
 dependency1.to=Celula
 dependency1.type=UsesDependency
-dependency2.from=Celula
-dependency2.to=Posicion
+dependency2.from=Tablero
+dependency2.to=Celula
 dependency2.type=UsesDependency
 dependency3.from=Celula
-dependency3.to=ContadorVecinos
+dependency3.to=Posicion
 dependency3.type=UsesDependency
-dependency4.from=ContadorVecinos
-dependency4.to=Celula
+dependency4.from=Celula
+dependency4.to=ContadorVecinos
 dependency4.type=UsesDependency
 objectbench.height=122
 objectbench.width=801

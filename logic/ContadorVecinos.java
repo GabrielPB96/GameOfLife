@@ -1,6 +1,7 @@
 package logic;
+import java.io.Serializable;
 
-public class ContadorVecinos{
+public class ContadorVecinos implements Serializable{
     private Celula celula;
     
     public ContadorVecinos(Celula celula) {

@@ -8,7 +8,14 @@
 import visual.*;
 public class GameOfLife {
     public static void main(String args[]) {
-        new Bienvenida();
-        new Visual();
+        Bienvenida b = new Bienvenida();
+        Visual v = new Visual();
+        v.setVisible(false);
+        if(b.isVisible()) {
+            b.dispose();
+            v.setVisible(true);
+        }else{
+            v.dispose();
+        }
     }
 }

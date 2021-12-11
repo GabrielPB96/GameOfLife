@@ -1,0 +1,16 @@
+#BlueJ class context
+comment0.target=PatternsFrame
+comment0.text=\r\n\ Write\ a\ description\ of\ class\ PatternsFrame\ here.\r\n\r\n\ @author\ (your\ name)\r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
+comment1.params=owner\ patterns
+comment1.target=PatternsFrame(Visual,\ java.util.ArrayList)
+comment2.params=
+comment2.target=void\ createFrame()
+comment3.params=lamina
+comment3.target=void\ createButtons(javax.swing.JPanel)
+comment4.params=e
+comment4.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment5.params=e
+comment5.target=void\ actionPerformed(java.awt.event.ActionEvent)
+comment6.params=
+comment6.target=void\ main()
+numComments=7
