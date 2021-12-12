@@ -49,7 +49,7 @@ public class Visual extends JFrame {
         
         play = new JButton("PLAY");
         reset = new JButton("RESET");
-        velocidad = new JLabel("VELOCIDAD: 50 ");
+        velocidad = new JLabel("SPEED: " + (201 - lamina.getVelocidad()) + "  ");
         pause = new JButton("PAUSE");
         resume = new JButton("RESUME");
         subir = new JButton(subirIco);
@@ -132,21 +132,21 @@ public class Visual extends JFrame {
                     pantalla.beep();
                     JOptionPane.showMessageDialog(Visual.this, "Speed Limit");
                 }
-                velocidad.setText("VELOCIDAD: " + (201 - lamina.getVelocidad()) + " ");
+                velocidad.setText("SPPED: " + (201 - lamina.getVelocidad()) + " ");
             }else if(e.getSource().equals(bajar)) {
                 if (!lamina.bajarVelocidad()) {
                     pantalla.beep();
                     JOptionPane.showMessageDialog(Visual.this, "Speed Limit");
                 }
-                velocidad.setText("VELOCIDAD: " + (201 - lamina.getVelocidad()) + " ");
+                velocidad.setText("SPPED: " + (201 - lamina.getVelocidad()) + " ");
             }else if(e.getSource().equals(reset)) {
                 lamina.stop();
                 lamina.reset();
             }else if(e.getSource().equals(play)) {
                 if(!lamina.enJuego()) {
-                    lamina.init();
                     lamina.play();
                 }else{
+                    pantalla.beep();
                     JOptionPane.showMessageDialog(Visual.this, "Reset the Board");
                 }
             }else if(e.getSource().equals(pause)) {
@@ -162,10 +162,10 @@ public class Visual extends JFrame {
                             Pattern pattern = new Pattern(name, posicionesMarcadas);
                             storage.save(pattern);
                         }else {
-                            JOptionPane.showMessageDialog(Visual.this, "Error, nombre vacio...");
+                            JOptionPane.showMessageDialog(Visual.this, "Error, empty name...");
                         }
                     }else {
-                        JOptionPane.showMessageDialog(Visual.this, "Error, nombre null...");
+                        JOptionPane.showMessageDialog(Visual.this, "Error, null name...");
                     }
                 }else {
                     JOptionPane.showMessageDialog(Visual.this, "Error, Reset the board...");
@@ -199,16 +199,14 @@ public class Visual extends JFrame {
 
 class Lamina extends JPanel {
     private Tablero tablero;
-    private ArrayList<Celula> celulas;
     private boolean run;
     private int delay;
     private Hilo animation;
     
     public Lamina() {
         run = false;
-        delay = 151;
+        delay = 100;
         setBackground(new Color(238, 193, 112));
-        celulas = new ArrayList<Celula>();
         tablero = new Tablero(78, 76);
         paintTablero();
     }
@@ -241,7 +239,6 @@ class Lamina extends JPanel {
         for(int i = 0; i < t.length; i++) {
             for(int j = 0; j < t[0].length; j++) {
                 add(t[i][j]);
-                celulas.add(t[i][j]);
             }
         } 
         updateUI();
@@ -249,40 +246,6 @@ class Lamina extends JPanel {
     
     public void reset() {
         tablero.reset();
-        for(Celula b: celulas){
-            b.setBackground(Color.BLACK);
-            b.dead();
-        }
-    }
-    
-    public void paintCelulas(){
-        var t = tablero.getTablero();
-        int pos = 0;
-        for(int i = 0; i < t.length; i++) {
-            for(int j = 0; j < t[0].length; j++) {
-                Celula b = celulas.get(pos);
-                if(t[i][j].vivo()) {
-                    b.revivir();
-                }else{
-                    b.dead();
-                }
-                pos++;
-            }
-        } 
-    }
-    
-    public void init() {
-        var t = tablero.getTablero();
-        int pos = 0;
-        for(int i = 0; i < t.length; i++) {
-            for(int j = 0; j < t[0].length; j++) {
-                if(celulas.get(pos).vivo()) {
-                    t[i][j].revivir();
-                }
-                pos++;
-            }
-        }
-        tablero.actualizarVecinos();
     }
     
     public void stop() {
@@ -300,11 +263,11 @@ class Lamina extends JPanel {
     
     public void play() {
         run = true;
+        tablero.actualizarVecinos();
         animation = new Hilo(new Runnable(){
             public void run(){
                 while(!animation.end) {
                     tablero.play();
-                    paintCelulas();
                     try{
                         synchronized(animation) {
                             while(animation.suspend) {

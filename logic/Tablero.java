@@ -7,12 +7,15 @@ package logic;
  * @version (a version number or a date)
  */
 import java.awt.Color;
+import java.util.ArrayList;
 
 public class Tablero {
     private Celula[][] celulas;
+    private ArrayList<Celula> celulasVivas;
     
     public Tablero(int filas, int columnas) {
         celulas = new Celula[filas][columnas];
+        celulasVivas = new ArrayList<Celula>();
         init();
     }
     
@@ -55,14 +58,15 @@ public class Tablero {
     }
     
     public void play() {
-        actualizarVecinos();
         for(int i=0; i<celulas.length; i++){
             for(int j=0; j<celulas[i].length; j++){
                 int vecinosVivos = celulas[i][j].vecinosVivos();
                 if(vecinosVivos < 2 || vecinosVivos > 3) {
-                    celulas[i][j].dead();        
-                }else if(!celulas[i][j].vivo() && vecinosVivos == 3){
-                    celulas[i][j].revivir(); 
+                    celulas[i][j].dead();
+                }else if(celulas[i][j].vivo() && (vecinosVivos >= 2 && vecinosVivos <= 3)){
+                    celulas[i][j].aumentarTime(); 
+                }else if(vecinosVivos == 3) {
+                    celulas[i][j].revivir();
                 }
             }
         }

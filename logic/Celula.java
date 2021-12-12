@@ -3,6 +3,7 @@ package logic;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.*;
 
 /**
  * Write a description of class Celula here.
@@ -10,7 +11,9 @@ import javax.swing.*;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Celula extends JButton implements MouseListener {
+public class Celula extends JButton {
+    public static boolean active = false;
+    
     private boolean vivo;
     private Posicion posicion;
     private ContadorVecinos contador;
@@ -26,7 +29,10 @@ public class Celula extends JButton implements MouseListener {
         tiempoEstatico = 0;
         setBackground(Color.BLACK);
         setCursor(new Cursor(12));
-        addMouseListener(this);
+        Oyente o = new Oyente();
+        addMouseListener(o);
+        addMouseMotionListener(o);
+        setBorder(LineBorder.createGrayLineBorder());
         contador = new ContadorVecinos(this);
     }
     
@@ -44,19 +50,18 @@ public class Celula extends JButton implements MouseListener {
     
     public void revivir() {
         vivo = true;
-        if(vecinosVivosActuales >= 2 && vecinosVivosActuales <= 3) {
-            if(tiempoEstatico < 10) {
-                tiempoEstatico++;
-            }
-            if(tiempoEstatico == 10) {
-                setBackground(new Color(34, 177, 76));
-            }else if(tiempoEstatico >= 5) {
-                    setBackground(new Color(181, 230, 29));
-            }else{
-                setBackground(Color.WHITE);
-            }
+        setBackground(Color.WHITE);
+    }
+    
+    public void aumentarTime() {
+        if(tiempoEstatico < 10) {
+            tiempoEstatico++;
+        }
+        if(tiempoEstatico == 10) {
+            setBackground(new Color(34, 177, 76));
+        }else if(tiempoEstatico >= 5) {
+                setBackground(new Color(181, 230, 29));
         }else{
-            tiempoEstatico = 0;
             setBackground(Color.WHITE);
         }
     }
@@ -95,17 +100,37 @@ public class Celula extends JButton implements MouseListener {
         contador.setInfinite(b);
     }
     
-    public void mouseClicked(MouseEvent e){
+    private void marcar() {
         vivo = !vivo;
         if(vivo) {
-            setBackground(Color.WHITE);
+            //setBackground(Color.WHITE);
+            revivir();
         }else{
-            setBackground(Color.BLACK);
+            //setBackground(Color.BLACK);
+            dead();
         }
     }
     
-    public void mouseEntered(MouseEvent e){}
-    public void mouseExited(MouseEvent e){}
-    public void mousePressed(MouseEvent e){}
-    public void mouseReleased(MouseEvent e){}
+    private class Oyente extends MouseAdapter {
+        public void mouseClicked(MouseEvent e){
+            marcar();
+        }
+        
+        public void mouseDragged(MouseEvent e) {
+            if (!Celula.active) {
+                Celula.active = true;
+                marcar();
+            }
+        }
+        
+        public void mouseEntered(MouseEvent e){
+            if (active) {
+                marcar();
+            }
+        }
+        
+        public void mouseReleased(MouseEvent e){
+            if (Celula.active) Celula.active = false;
+        }
+    }
 }
