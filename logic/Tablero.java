@@ -58,19 +58,24 @@ public class Tablero {
     }
     
     public void play() {
-        for(int i=0; i<celulas.length; i++){
-            for(int j=0; j<celulas[i].length; j++){
-                int vecinosVivos = celulas[i][j].vecinosVivos();
-                if(vecinosVivos < 2 || vecinosVivos > 3) {
-                    celulas[i][j].dead();
-                }else if(celulas[i][j].vivo() && (vecinosVivos >= 2 && vecinosVivos <= 3)){
-                    celulas[i][j].aumentarTime(); 
-                }else if(vecinosVivos == 3) {
-                    celulas[i][j].revivir();
+        Thread game = new Thread(new Runnable(){
+            public void run(){
+                for(int i=0; i<celulas.length; i++){
+                    for(int j=0; j<celulas[i].length; j++){
+                        int vecinosVivos = celulas[i][j].vecinosVivos();
+                        if(vecinosVivos < 2 || vecinosVivos > 3) {
+                            celulas[i][j].dead();
+                        }else if(celulas[i][j].vivo() && (vecinosVivos >= 2 && vecinosVivos <= 3)){
+                            celulas[i][j].aumentarTime(); 
+                        }else if(vecinosVivos == 3) {
+                            celulas[i][j].revivir();
+                        }
+                    }
                 }
+                actualizarVecinos();
             }
-        }
-        actualizarVecinos();
+        });
+        game.start();
     }
     
     public Celula[][] getTablero() {
