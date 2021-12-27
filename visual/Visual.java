@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import logic.*;
+import java.awt.geom.*;
 import storage.*;
 
 public class Visual extends JFrame {
@@ -16,21 +17,23 @@ public class Visual extends JFrame {
     private Icon bajarIco = new ImageIcon(pantalla.getImage("./assets/bajar.png").getScaledInstance(20, 20, Image.SCALE_SMOOTH));
     private Icon subirIco = new ImageIcon(pantalla.getImage("./assets/subir.png").getScaledInstance(20, 20, Image.SCALE_SMOOTH));    
     private Storage storage;
+    private int height;
     
     public Visual() {
+        height = pantalla.getScreenSize().height-45;
+        
         lamina = new Lamina();
         storage = new Storage();
         
         addWindowListener(new OyenteWindow());
         
         setTitle("Game Of Life");
-        setBounds(0, 0, pantalla.getScreenSize().height-45, pantalla.getScreenSize().height-45);
+        setBounds(0, 0, 826, height);
         setLocationRelativeTo(null);
         
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         init();
-        setVisible(true);
         play.setVisible(true);
         reset.setVisible(true);
         setVisible(true);
@@ -205,10 +208,13 @@ class Lamina extends JPanel {
     
     public Lamina() {
         run = false;
+        setLayout(null);
+        setBackground(Color.GRAY);
+        setCursor(new Cursor(12));
         delay = 100;
-        setBackground(new Color(238, 193, 112));
-        tablero = new Tablero(78, 76);
-        paintTablero();
+        addMouseListener(new Oyente());
+        addMouseMotionListener(new Oyente());
+        tablero = new Tablero(78, 90);
     }
     
     public int getVelocidad() {
@@ -232,20 +238,25 @@ class Lamina extends JPanel {
         return false;
     }
     
-    public void paintTablero() {
-        removeAll();
-        setLayout(new GridLayout(78, 76));
+    public void paintTablero(Graphics g) {
+        Graphics2D g2 = (Graphics2D)g;
         var t = tablero.getTablero();
         for(int i = 0; i < t.length; i++) {
             for(int j = 0; j < t[0].length; j++) {
-                add(t[i][j]);
+                g2.setColor(t[i][j].getColor());
+                g2.fillRect(t[i][j].getColumna() * 9, t[i][j].getFila() * 8, 8, 7);
             }
         } 
-        updateUI();
+    }
+    
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        paintTablero(g);
     }
     
     public void reset() {
         tablero.reset();
+        repaint();
     }
     
     public void stop() {
@@ -268,6 +279,7 @@ class Lamina extends JPanel {
             public void run(){
                 while(!animation.end) {
                     tablero.play();
+                    repaint();
                     try{
                         synchronized(animation) {
                             while(animation.suspend) {
@@ -279,7 +291,6 @@ class Lamina extends JPanel {
                 }        
             }
         });
-        animation.setDaemon(true);
         animation.start();
     }
     
@@ -297,6 +308,33 @@ class Lamina extends JPanel {
         for (int[] pos : posiciones) {
             tablero.revivir(pos[0], pos[1]);
         } 
-        updateUI();
+        repaint();
+    }
+    
+    private class Oyente extends MouseAdapter {
+        public void mouseClicked(MouseEvent e){
+            int x, y;
+            x = e.getX();
+            y = e.getY();
+            var t = tablero.getTablero();
+            
+            for (int i = 0; i < t.length; i++) {
+                for (int j = 0; j < t[i].length; j++) {
+                    Rectangle2D.Double r = new Rectangle2D.Double(t[i][j].getColumna() * 9, t[i][j].getFila() * 8, 8 , 7);
+                    if (r.contains(x, y)) {
+                        if(!t[i][j].vivo()) {
+                            t[i][j].revivir();
+                        }else{
+                            t[i][j].dead();
+                        }
+                    }
+                }
+            }
+            repaint();
+        }
+        
+        public void mouseDragged(MouseEvent e) {
+            //completar   
+        }
     }
 }

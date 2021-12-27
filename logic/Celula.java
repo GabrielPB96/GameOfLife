@@ -4,17 +4,18 @@ import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-
+import java.awt.geom.*;
 /**
  * Write a description of class Celula here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Celula extends JButton {
+public class Celula extends Rectangle2D.Double {
     public static boolean active = false;
     
     private boolean vivo;
+    private Color color;
     private Posicion posicion;
     private ContadorVecinos contador;
     private int vecinosVivosActuales;
@@ -27,12 +28,7 @@ public class Celula extends JButton {
         vecinosVivosActuales = 0;
         vecinosVivosAntiguos = 0;
         tiempoEstatico = 0;
-        setBackground(Color.BLACK);
-        setCursor(new Cursor(12));
-        Oyente o = new Oyente();
-        addMouseListener(o);
-        addMouseMotionListener(o);
-        setBorder(LineBorder.createGrayLineBorder());
+        color = Color.BLACK;
         contador = new ContadorVecinos(this);
     }
     
@@ -45,12 +41,12 @@ public class Celula extends JButton {
         vecinosVivosActuales = 0;
         vecinosVivosAntiguos = 0;
         tiempoEstatico = 0;
-        setBackground(Color.BLACK);
+        color = Color.BLACK;
     }
     
     public void revivir() {
         vivo = true;
-        setBackground(Color.WHITE);
+        color = Color.WHITE;
     }
     
     public void aumentarTime() {
@@ -58,11 +54,11 @@ public class Celula extends JButton {
             tiempoEstatico++;
         }
         if(tiempoEstatico == 10) {
-            setBackground(new Color(34, 177, 76));
+            color = new Color(34, 177, 76);
         }else if(tiempoEstatico >= 5) {
-                setBackground(new Color(181, 230, 29));
+            color = new Color(181, 230, 29);
         }else{
-            setBackground(Color.WHITE);
+            color = Color.WHITE;
         }
     }
     
@@ -103,34 +99,13 @@ public class Celula extends JButton {
     private void marcar() {
         vivo = !vivo;
         if(vivo) {
-            //setBackground(Color.WHITE);
             revivir();
         }else{
-            //setBackground(Color.BLACK);
             dead();
         }
     }
     
-    private class Oyente extends MouseAdapter {
-        public void mouseClicked(MouseEvent e){
-            marcar();
-        }
-        
-        public void mouseDragged(MouseEvent e) {
-            if (!Celula.active) {
-                Celula.active = true;
-                marcar();
-            }
-        }
-        
-        public void mouseEntered(MouseEvent e){
-            if (active) {
-                marcar();
-            }
-        }
-        
-        public void mouseReleased(MouseEvent e){
-            if (Celula.active) Celula.active = false;
-        }
+    public Color getColor() {
+        return color;
     }
 }
